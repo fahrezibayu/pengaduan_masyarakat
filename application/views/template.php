@@ -80,10 +80,10 @@
 								<!-- Menu Footer-->
 								<li class="user-footer">
 									<div class="pull-left">
-										<a href="<?= base_url('profile') ?>" class="btn btn-default btn-flat">Profile</a>
+										<a href="<?= base_url('index.php/profile') ?>" class="btn btn-default btn-flat">Profile</a>
 									</div>
 									<div class="pull-right">
-										<a href="<?= site_url('auth/logout') ?>" class="btn btn-default btn-flat bg-red">Sign out</a>
+										<a href="<?= site_url('index.php/auth/logout') ?>" class="btn btn-default btn-flat bg-red">Sign out</a>
 									</div>
 								</li>
 							</ul>

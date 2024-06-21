@@ -49,7 +49,7 @@ class Auth extends CI_Controller
                 } else {
                     echo "<script>
                     alert ('Password salah !');
-                    window.location='" . site_url('index.phpauth/login') . "'; 
+                    window.location='" . site_url('index.php/auth/login') . "'; 
                     </script>";
                 }
             }
