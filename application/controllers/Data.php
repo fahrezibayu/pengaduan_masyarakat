@@ -22,7 +22,6 @@ class Data extends CI_Controller
         $data = array(
             'page' => 'add',
             'users' => $this->db->get('user')->result_array(),
-            'cities' => $this->db->get('cities')->result_array()
         );
 
         $this->form_validation->set_rules('nama_pegawai', 'Nama pegawai', 'required');

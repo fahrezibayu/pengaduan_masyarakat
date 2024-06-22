@@ -7,7 +7,13 @@ class Laporan extends CI_Controller
 	{
 		parent::__construct();
 		check_not_login();
-		$this->load->model(['approval_m', 'data_m', 'tunggu_m','absen_m','divisi_m','gaji_model']);
+		$this->load->model(['pengaduanmasyarakat_m', 'data_m',]);
+	}
+
+	public function index()
+	{
+		$data['row'] = $this->pengaduanmasyarakat_m->get();
+		$this->template->load('template', 'laporan/lap_pengaduan', $data);
 	}
 
 	public function approval()

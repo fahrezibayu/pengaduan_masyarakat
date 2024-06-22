@@ -38,7 +38,7 @@
 <script>
     $(".back").click(function() {
         $.ajax({
-            url: "<?= base_url() ?>profile/load_profile",
+            url: "<?= base_url() ?>index.php/profile/load_profile",
             type: "get",
             dataType: "html",
             success: function(data) {
@@ -63,7 +63,7 @@
         const password_baru = $("[name='password_baru']").val();
 
         $.ajax({
-            url: "<?= base_url(); ?>profile/ajax_edit_password_validation",
+            url: "<?= base_url(); ?>index.php/profile/ajax_edit_password_validation",
             type: "post",
             data: {
                 username: username,
@@ -108,7 +108,7 @@
                             } else {
                                 $(".password_baru").html("");
                                 $.ajax({
-                                    url: "<?= base_url(); ?>profile/proses_ubah_password",
+                                    url: "<?= base_url(); ?>index.php/profile/proses_ubah_password",
                                     type: "post",
                                     data: {
                                         username: username,
@@ -129,6 +129,9 @@
 
                                             $(".edit-username").attr("disabled", "disabled");
                                             $(".edit-password").attr("disabled", "disabled");
+											setTimeout(() => {
+                                                window.location = "<?= base_url() ?>index.php/auth/logout";
+                                            }, 3000);
                                         }
                                     }
                                 });

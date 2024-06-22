@@ -21,7 +21,7 @@
     <i class="fa fa-times back" style="color: #899899;"></i>
 </div>
 <div class="p" style="padding:20px 25px;">
-    <form action="<?= base_url(); ?>profile/edit_img_profile/<?= $this->session->userdata('id_user'); ?>" method="post" enctype="multipart/form-data">
+    <form action="<?= base_url(); ?>index.php/profile/edit_img_profile/<?= $this->session->userdata('id_user'); ?>" method="post" enctype="multipart/form-data">
         <center>
             <img src="<?= base_url() ?>uploads/<?= $this->fungsi->user_login()->gambar ?>" width="150" class="img-circle user-image">
             <input type="file" id="gambar" name="gambar" class="foto-profile">
@@ -39,7 +39,7 @@
 
     $(".back").click(function() {
         $.ajax({
-            url: "<?= base_url() ?>profile/load_profile",
+            url: "<?= base_url() ?>index.php/profile/load_profile",
             type: "get",
             dataType: "html",
             success: function(data) {

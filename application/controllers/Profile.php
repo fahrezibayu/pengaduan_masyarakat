@@ -168,21 +168,19 @@ class Profile extends CI_Controller
                         alert('Data user berhasil ubah');
                     </script>";
             }
-            echo "<script>window.location='" . site_url('profile') . "';</script>";
+            echo "<script>window.location='" . site_url('index.php/profile') . "';</script>";
         }
     }
 
     public function get_data_user()
     {
         $id_user = $this->session->userdata('id_user');
-        $this->db->select('ket_divisi,nama_pegawai');
-        $this->db->join('divisi', 'user.id_divisi = divisi.id_divisi');
+        $this->db->select('*');
         $this->db->where('id_user', $id_user);
         $data_user = $this->db->get('user')->row_array();
         if ($this->input->is_ajax_request()) {
             $data = [
-                "data_user" => $data_user,
-                "data_karyawan" => $this->db->get_where("data_karyawan", ["id_user" => $id_user])->row_array()
+                "data_user" => $data_user
             ];
             echo json_encode($data);
         }
@@ -191,23 +189,16 @@ class Profile extends CI_Controller
     public function proses_edit_data_diri()
     {
         $nama_pegawai = $_POST['nama_pegawai'];
-        $tgl_masuk = $_POST['tgl_masuk'];
-        $tgl_lahir = $_POST['tgl_lahir'];
-        $tempat_lahir = $_POST['tempat_lahir'];
-        $jenis_kelamin = $_POST['jenis_kelamin'];
         $alamat = $_POST['alamat'];
         $nohp = $_POST['nohp'];
-        $email = $_POST['email'];
 
         if ($this->input->is_ajax_request()) {
             $this->form_validation->set_rules('nama_pegawai', 'Nama pegawai', 'required|trim');
-            $this->form_validation->set_rules('email', 'Email', 'trim|valid_email');
 
             if ($this->form_validation->run() == false) {
                 $msg = [
                     "error" => [
-                        "nama_pegawai" => form_error("nama_pegawai"),
-                        "email" => form_error("email")
+                        "nama_pegawai" => form_error("nama_pegawai")
                     ]
                 ];
             } else {
@@ -215,26 +206,10 @@ class Profile extends CI_Controller
                 $this->db->set('nama_pegawai', $nama_pegawai);
                 $this->db->where('id_user', $this->session->userdata('id_user'));
                 $this->db->update('user');
-
-                // edit data_karyawan
-                // $data = [
-                //     "user_id" => $this->session->userdata('id_user'),
-                //     "tgl_masuk" => $tgl_masuk,
-                //     "tgl_lahir" => $tgl_lahir,
-                //     "tempat_lahir" => $tempat_lahir,
-                //     "jenis_kelamin" => $jenis_kelamin,
-                //     "alamat" => $alamat,
-                //     "nohp" => $nohp,
-                //     "email" => $email
-                // ];
-                $this->db->set('tgl_lahir', $tgl_lahir);
-                $this->db->set('tempat_lahir', $tempat_lahir);
-                $this->db->set('jenis_kelamin', $jenis_kelamin);
                 $this->db->set('alamat', $alamat);
                 $this->db->set('nohp', $nohp);
-                $this->db->set('email', $email);
                 $this->db->where('id_user', $this->session->userdata("id_user"));
-                $this->db->update("data_karyawan");
+                $this->db->update("user");
 
                 $msg = [
                     "status" => 200,

@@ -18,6 +18,7 @@ class User_m extends CI_Model
         $this->db->select('level.ket_level, user.*');
         $this->db->from('user');
         $this->db->join('level', 'user.id_level = level.id_level');
+		$this->db->where("level.id_level != ", 3);
         if ($username != null) {
             $this->db->where('username', $username);
         }

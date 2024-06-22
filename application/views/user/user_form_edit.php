@@ -15,7 +15,7 @@
         <div class="box-header">
             <h3 class="box-title">Edit Data Users</h3>
             <div class="pull-right">
-                <a href="<?= site_url('user') ?>" class="btn btn-warning btn-flat">
+                <a href="<?= site_url('index.php/user') ?>" class="btn btn-warning btn-flat">
                     <i class="fa fa-undo"></i> Back
                 </a>
             </div>
@@ -35,18 +35,15 @@
                             <small class="text-danger"><?= form_error('username'); ?></small>
                         </div>
                         <input type="hidden" class="form-control" value="<?= $user_by_id['password']; ?>" name="password" id="password" placeholder="Password">
-                        <div class="form-group">
-                            <label for="divisi">Divisi</label>
-                            <select class="form-control" name="divisi" id="divisi">
-                                <option>--Pilih--</option>
-                                <?php foreach ($divisies as $divisi) : ?>
-                                    <?php if ($user_by_id['id_divisi'] == $divisi['id_divisi']) : ?>
-                                        <option value="<?= $divisi['id_divisi']; ?>" selected><?= $divisi['ket_divisi']; ?></option>
-                                    <?php else : ?>
-                                        <option value="<?= $divisi['id_divisi']; ?>"><?= $divisi['ket_divisi']; ?></option>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            </select>
+						<div class="form-group">
+                            <label for="alamat">Alamat</label>
+                            <input type="text" class="form-control" value="<?= $user_by_id['alamat']; ?>" name="alamat" id="alamat" placeholder="Alamat">
+                            <small class="text-danger"><?= form_error('alamat'); ?></small>
+                        </div>
+						<div class="form-group">
+                            <label for="nohp">No Hp</label>
+                            <input type="text" class="form-control" value="<?= $user_by_id['nohp']; ?>" name="nohp" id="nohp" placeholder="No Hp">
+                            <small class="text-danger"><?= form_error('nohp'); ?></small>
                         </div>
                         <div class="form-group">
                             <label for="level">Level</label>

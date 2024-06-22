@@ -40,7 +40,7 @@
 
 		<header class="main-header">
 			<!-- Logo -->
-			<a href="<?= base_url('dashboard') ?>" class="logo">
+			<a href="<?= base_url('index.php/dashboard') ?>" class="logo">
 				<!-- mini logo for sidebar mini 50x50 pixels -->
 
 				<!-- logo for regular state and mobile devices -->
@@ -109,22 +109,12 @@
 						<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 					</div>
 				</div>
-				<!-- search form -->
-				<form action="#" method="get" class="sidebar-form">
-					<div class="input-group">
-						<input type="text" name="q" class="form-control" placeholder="Search...">
-						<span class="input-group-btn">
-							<button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-							</button>
-						</span>
-					</div>
-				</form>
 				<!-- /.search form -->
 				<!-- sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu" data-widget="tree">
 					<li class="header">GENERAL</li>
 					<li <?= $this->uri->segment(1) == 'dashboard' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
-						<a href="<?= site_url('dashboard') ?>">
+						<a href="<?= site_url('index.php/dashboard') ?>">
 							<i class="fa fa-dashboard"></i> <span>Dashboard</span>
 							<span class="pull-right-container">
 							</span>
@@ -136,7 +126,9 @@
 						<li <?= $this->uri->segment(1) == 'mediapelaporan' ? 'class="active"' : '' ?>><a href="<?= site_url('index.php/mediapelaporan') ?>"><i class="fa fa-clock-o"></i> <span> Media Pelaporan </span></a></li>
 						<li <?= $this->uri->segment(1) == 'bidang' ? 'class="active"' : '' ?>><a href="<?= site_url('index.php/bidang') ?>"><i class="fa fa-building"></i> <span>Bidang</span></a></li>
 						<li <?= $this->uri->segment(1) == 'jenispengaduan' ? 'class="active"' : '' ?>><a href="<?= site_url('index.php/jenispengaduan') ?>"><i class="fa fa-user"></i> <span>Jenis Pengaduan</span></a></li>
-						<li <?= $this->uri->segment(1) == 'data' ? 'class="active"' : '' ?>><a href="<?= site_url('data') ?>"><i class="fa fa-users"></i> <span>Data Karyawan</span></a></li>
+						<li <?= $this->uri->segment(1) == 'user' ? 'class="active"' : '' ?>><a href="<?= site_url('index.php/user') ?>"><i class="fa fa-users"></i> <span>Data Karyawan</span></a></li>
+						<li class="header"> PENGADUAN MASYARAKAT </li>
+						<li <?= $this->uri->segment(1) == 'pengaduanmasyarakat' ? 'class="active"' : '' ?>><a href="<?= site_url('index.php/pengaduanmasyarakat') ?>"><i class="fa fa-tasks"></i> <span> Data Pengaduan </span></a></li>
 						<li class="header"> LAPORAN </li>
 						<li <?= $this->uri->segment(1) == 'laporan' ? 'class="active"' : '' ?>><a href="<?= site_url('index.php/laporan') ?>"><i class="fa fa-book"></i> <span> Laporan Pelaporan </span></a></li>
 					<?php } ?>
@@ -308,20 +300,20 @@
 					});
 				}
 			})
-			$("#laporan_absensi").DataTable({
+			$("#laporan_pengaduan").DataTable({
 				dom: 'Bfrtip',
 				buttons: [{
 						extend: 'print',
 						text: 'Print',
-						title: 'Daftar Absensi',
+						title: 'Daftar Pengaduan Masyarakat',
 						exportOptions: {
-							columns: [0, 1, 3, 6, 8]
+							columns: [1,2,3,4,5,6,7,8]
 						}
 					},
 					{
 						text: 'Export PDF',
 						extend: 'pdf',
-						filename: 'Data Absensi',
+						filename: 'Daftar Pengaduan Masyarakat',
 						orientation: 'landscape', //portrait
 						pageSize: 'A4', //A3 , A5 , A6 , legal , letter
 						exportOptions: {
@@ -340,7 +332,7 @@
 									columns: [{
 										alignment: 'center',
 										italics: true,
-										text: 'Data Absensi',
+										text: 'Daftar Pengaduan Masyarakat',
 										fontSize: 15,
 										margin: [10, 0]
 									}, ],
@@ -369,15 +361,15 @@
 							doc.content[0].layout = objLayout;
 						},
 						exportOptions: {
-							columns: [0, 1, 3, 6, 8]
+							columns: [1,2,3,4,5,6,7,8]
 						}
 					},
 					{
 						extend: 'excel',
 						text: 'Export Excel',
-						title: 'Daftar Absensi',
+						title: 'Daftar Pengaduan Masyarakat',
 						exportOptions: {
-							columns: [0, 1, 3, 6, 8]
+							columns: [1,2,3,4,5,6,7,8]
 						},
 						customize: function(xlsx) {
 							var sheet = xlsx.xl.worksheets['sheet1.xml'];
@@ -390,60 +382,6 @@
 				],
 
 				"scrollX": true,
-				initComplete: function() {
-					this.api().columns().every(function() {
-						var column = this;
-						var select = $('<select><option value=""></option></select>')
-							.appendTo($(column.footer()).empty())
-							.on('change', function() {
-								var val = $.fn.dataTable.util.escapeRegex(
-									$(this).val()
-								);
-
-								column
-									.search(val ? '^' + val + '$' : '', true, false)
-									.draw();
-							});
-
-						column.data().unique().sort().each(function(d, j) {
-							select.append('<option>' + d + '</option>')
-						});
-					});
-				}
-			})
-			$("#laporan_approval").DataTable({
-				dom: 'Bfrtip',
-				buttons: [{
-						extend: 'print',
-						text: 'Print',
-						title: 'Daftar Approval Cuti',
-						exportOptions: {
-							columns: [1, 2, 3, 4, 5, 6, 7, 8]
-						}
-					},
-					{
-						extend: 'pdf',
-						text: 'Export Pdf',
-						title: 'Daftar Approval Cuti',
-						orientation: 'landscape',
-						exportOptions: {
-							columns: [1, 2, 3, 4, 5, 6, 7, 8]
-						},
-						pageSize: 'LEGAL'
-					},
-					{
-						extend: 'excel',
-						text: 'Export Excel',
-						title: 'Daftar Approval Cuti',
-						exportOptions: {
-							columns: [1, 2, 3, 4, 5, 6, 7, 8]
-						}
-					},
-				],
-				"lengthMenu": [
-					[-1],
-					["All"]
-				],
 				initComplete: function() {
 					this.api().columns().every(function() {
 						var column = this;

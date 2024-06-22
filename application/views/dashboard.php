@@ -30,11 +30,11 @@
 		</div>
 		<div class="col-md-3 col-sm-6 col-xs-12">
 			<div class="info-box">
-				<span class="info-box-icon bg-aqua"><i class="fa fa-calendar"></i></span>
+				<span class="info-box-icon bg-aqua"><i class="fa fa-users"></i></span>
 
 				<div class="info-box-content">
 					<span class="info-box-text"> Total Pelapor </span>
-					<span class="info-box-number"><small> Orang </small></span>
+					<span class="info-box-number"><?= $pelapor ?><small> Orang </small></span>
 				</div>
 				<!-- /.info-box-content -->
 			</div>
@@ -43,11 +43,11 @@
 		<!-- /.col -->
 		<div class="col-md-3 col-sm-6 col-xs-12">
 			<div class="info-box">
-				<span class="info-box-icon bg-red"><i class="fa fa-calendar-minus-o"></i></span>
+				<span class="info-box-icon bg-red"><i class="fa fa-tasks"></i></span>
 
 				<div class="info-box-content">
 					<span class="info-box-text"> Total Aduan </span>
-					<span class="info-box-number"><small>  </small></span>
+					<span class="info-box-number"><?= $pengaduan ?><small>  </small></span>
 				</div>
 				<!-- /.info-box-content -->
 			</div>
@@ -56,11 +56,11 @@
 		<!-- /.col -->
 		<div class="col-md-3 col-sm-6 col-xs-12">
 			<div class="info-box">
-				<span class="info-box-icon bg-green"><i class="fa fa-calendar-o"></i></span>
+				<span class="info-box-icon bg-yellow"><i class="fa fa-tasks"></i></span>
 
 				<div class="info-box-content">
 					<span class="info-box-text"> Aduan Proses </span>
-					<span class="info-box-number"><small>  </small></span>
+					<span class="info-box-number"><?= $proses ?><small>  </small></span>
 				</div>
 				<!-- /.info-box-content -->
 			</div>
@@ -69,11 +69,11 @@
 		<!-- /.col -->
 		<div class="col-md-3 col-sm-6 col-xs-12">
 			<div class="info-box">
-				<span class="info-box-icon bg-green"><i class="fa fa-calendar-o"></i></span>
+				<span class="info-box-icon bg-green"><i class="fa fa-tasks"></i></span>
 
 				<div class="info-box-content">
 					<span class="info-box-text"> Aduan Selesai </span>
-					<span class="info-box-number"><small>  </small></span>
+					<span class="info-box-number"><?= $selesai ?><small>  </small></span>
 				</div>
 				<!-- /.info-box-content -->
 			</div>

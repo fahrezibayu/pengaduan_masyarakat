@@ -6,9 +6,9 @@ class Data_m extends CI_Model
 
     public function get()
     {
-        $this->db->select('user.nama_pegawai, user.id_divisi, data_karyawan.*');
-        $this->db->join('user', 'data_karyawan.id_user = user.id_user');
-        $query = $this->db->get('data_karyawan')->result_array();
+        $this->db->select('*');
+		$this->db->where("id_level != ",3);
+        $query = $this->db->get('user')->result_array();
         return $query;
     }
 

@@ -7,7 +7,6 @@
         <a href="" class="update-data-pribadi" style="position: relative; top:15px;"><i class="fa fa-edit"></i> Edit Data Pribadi</a>
     </div>
     <h3 class="text-bold"><?= $this->fungsi->user_login()->nama_pegawai ?></h3>
-    <p class="text-bold"><?= $this->fungsi->user_login()->ket_divisi ?></p>
     <a class="btn btn-primary edit-password">Edit Password</a>
     <a class="btn btn-primary edit-username">Edit Username</a>
 </center>
@@ -15,7 +14,7 @@
 <script>
     $(".edit-password").click(function(e) {
         $.ajax({
-            url: "<?= base_url() ?>profile/load_form_password",
+            url: "<?= base_url() ?>index.php/profile/load_form_password",
             type: "get",
             dataType: "html",
             success: function(data) {
@@ -27,7 +26,7 @@
 
     $(".edit-username").click(function(e) {
         $.ajax({
-            url: "<?= base_url() ?>profile/load_form_username",
+            url: "<?= base_url() ?>index.php/profile/load_form_username",
             type: "get",
             dataType: "html",
             success: function(data) {
@@ -39,7 +38,7 @@
 
     $(".update-foto").click(function(e) {
         $.ajax({
-            url: "<?= base_url() ?>profile/load_upload_foto",
+            url: "<?= base_url() ?>index.php/profile/load_upload_foto",
             type: "get",
             dataType: "html",
             success: function(data) {
@@ -53,7 +52,7 @@
         $(".card").css("width", "400px");
         $(".card").css("height", "780px");
         $.ajax({
-            url: "<?= base_url() ?>profile/load_edit_data_diri",
+            url: "<?= base_url() ?>index.php/profile/load_edit_data_diri",
             type: "get",
             dataType: "html",
             success: function(data) {

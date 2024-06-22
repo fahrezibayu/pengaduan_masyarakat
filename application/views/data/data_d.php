@@ -15,25 +15,20 @@
 		<div class="box-header">
 			<h3 class="box-title">Data Karyawan</h3>
 			<div class="pull-right">
-				<a href="<?= site_url('data/add') ?>" class="btn btn-primary btn-flat">
+				<a href="<?= site_url('index.php/data/add') ?>" class="btn btn-primary btn-flat">
 					<i class="fa fa-plus"></i> Create
 				</a>
 			</div>
 
 		</div>
 		<div class="box-body table-responsive">
-			<table class="table table-bordered table-striped nowrap example-class" id="laporan_karyawan">
+			<table class="table table-bordered table-striped nowrap example-class" id="laporan_karyawan" style="width:100%">
 				<thead>
 					<tr class="text-sm">
 						<th>No</th>
 						<th>Nama</th>
-						<th>Tgl Masuk</th>
-						<th>Tgl Lahir</th>
-						<th>Tempat Lahir</th>
-						<th>JK</th>
 						<th>Alamat</th>
 						<th>No HP</th>
-						<th>Email</th>
 						<th>Aksi</th>
 					</tr>
 				</thead>
@@ -66,13 +61,8 @@
 						<tr class="text-sm">
 							<td><?= $no++; ?></td>
 							<td><?= $kr['nama_pegawai']; ?></td>
-							<td><?= tgl_indonesia($kr['tgl_masuk']); ?></td>
-							<td><?= tgl_indonesia($kr['tgl_lahir']); ?></td>
-							<td><?= $kr['tempat_lahir']; ?></td>
-							<td><?= $kr['jenis_kelamin']; ?></td>
 							<td><?= $kr['alamat']; ?></td>
 							<td><?= $kr['nohp']; ?></td>
-							<td><?= $kr['email']; ?></td>
 							<td class="text-center" width="160px">
 								<a href="<?= base_url(); ?>data/edit/<?= $kr['id_user']; ?>" class="btn btn-primary btn-xs">
 									<i class="fa fa-pencil"></i> Edit

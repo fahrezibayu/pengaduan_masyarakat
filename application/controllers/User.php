@@ -8,7 +8,7 @@ class User extends CI_Controller
         parent::__construct();
         check_not_login();
         check_admin();
-        $this->load->model(['user_m', 'data_m', 'divisi_m']);
+        $this->load->model(['user_m', 'data_m']);
         $this->load->library('form_validation');
     }
 
@@ -21,11 +21,8 @@ class User extends CI_Controller
     public function add_user()
     {
 
-        $this->db->select('divisi.id_divisi, ket_divisi');
-        $this->db->from('divisi');
         $data = [
-            'divisies' => $this->db->get()->result_array(),
-            'levels' => $this->db->get('level')->result_array()
+            'levels' => $this->db->where('id_level != ', 3)->get('level')->result_array()
         ];
 
         $this->form_validation->set_rules('nama_pegawai', 'Nama pegawai', 'required');
@@ -63,7 +60,8 @@ class User extends CI_Controller
                     'username' => $this->input->post('username'),
                     'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
                     // 'password' => $this->input->post('password'),
-                    'id_divisi' => $this->input->post('divisi'),
+                    'alamat' => $this->input->post('alamat'),
+                    'nohp' => $this->input->post('nohp'),
                     'id_level' => $this->input->post('level')
                 ];
                 $this->db->insert('user', $data_post);
@@ -72,7 +70,7 @@ class User extends CI_Controller
                         alert('Data user berhasil ditambahkan');
                     </script>";
                 }
-                echo "<script>window.location='" . site_url('user') . "';</script>";
+                echo "<script>window.location='" . site_url('index.php/user') . "';</script>";
                 // echo $this->upload->display_errors();
             } else {
                 $new_img = $this->upload->data('file_name');
@@ -81,7 +79,8 @@ class User extends CI_Controller
                     'gambar' => $new_img,
                     'username' => $this->input->post('username'),
                     'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
-                    'id_divisi' => $this->input->post('divisi'),
+                    'alamat' => $this->input->post('alamat'),
+                    'nohp' => $this->input->post('nohp'),
                     'id_level' => $this->input->post('level')
                 ];
                 $this->db->insert('user', $data_post);
@@ -90,7 +89,7 @@ class User extends CI_Controller
                         alert('Data user berhasil ditambahkan');
                     </script>";
                 }
-                echo "<script>window.location='" . site_url('user') . "';</script>";
+                echo "<script>window.location='" . site_url('index.php/user') . "';</script>";
             }
             // }
         }
@@ -99,10 +98,7 @@ class User extends CI_Controller
 
     public function edit_user($id)
     {
-        $this->db->select('id_divisi, ket_divisi');
-        $this->db->from('divisi');
         $data = [
-            'divisies' => $this->db->get()->result_array(),
             'levels' => $this->db->get('level')->result_array(),
             'user_by_id' => $this->db->get_where('user', ['id_user' => $id])->row_array()
         ];
@@ -123,7 +119,8 @@ class User extends CI_Controller
                     'nama_pegawai' => $this->input->post('nama_pegawai'),
                     'username' => $this->input->post('username'),
                     'password' => $this->input->post('password'),
-                    'id_divisi' => $this->input->post('divisi'),
+                    'alamat' => $this->input->post('alamat'),
+                    'nohp' => $this->input->post('nohp'),
                     'id_level' => $this->input->post('level')
                 ];
                 $this->db->where('id_user', $id);
@@ -133,7 +130,7 @@ class User extends CI_Controller
                             alert('Data user berhasil ubah');
                         </script>";
                 }
-                echo "<script>window.location='" . site_url('user') . "';</script>";
+                echo "<script>window.location='" . site_url('index.php/user') . "';</script>";
             } else {
                 $new_img = $this->upload->data('file_name');
                 $data_post = [
@@ -141,7 +138,8 @@ class User extends CI_Controller
                     'gambar' => 'default.png',
                     'username' => $this->input->post('username'),
                     'password' => $this->input->post('password'),
-                    'id_divisi' => $this->input->post('divisi'),
+                    'alamat' => $this->input->post('alamat'),
+                    'nohp' => $this->input->post('nohp'),
                     'id_level' => $this->input->post('level')
                 ];
                 $this->db->where('id_user', $id);
@@ -151,7 +149,7 @@ class User extends CI_Controller
                             alert('Data user berhasil ubah');
                         </script>";
                 }
-                echo "<script>window.location='" . site_url('user') . "';</script>";
+                echo "<script>window.location='" . site_url('index.php/user') . "';</script>";
             }
         }
     }
@@ -175,6 +173,6 @@ class User extends CI_Controller
         if ($this->db->affected_rows() > 0) {
             echo "<script>alert('Data berhasil dihapus');</script>";
         }
-        echo "<script>window.location='" . site_url('user') . "';</script>";
+        echo "<script>window.location='" . site_url('index.php/user') . "';</script>";
     }
 }

@@ -16,7 +16,47 @@
     <!-- Bootstrap core CSS -->
     <link href="<?= base_url() ?>assets/webprofile/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+		<style>
+			/* Styling dasar untuk tabel */
+			table {
+				width: 100%;
+				border-collapse: collapse; /* Menggabungkan batas antar sel */
+				border-spacing: 0; /* Jarak antar sel */
+			}
 
+			/* Styling untuk header tabel */
+			th {
+				background-color: #4da6e7; /* Warna latar header */
+				text-align: left;
+				padding: 8px;
+				color: #FFF;
+				border-bottom: 1px solid #ddd; /* Garis bawah header */
+			}
+
+			/* Styling untuk sel dalam tabel */
+			td {
+				padding: 8px;
+				border-bottom: 1px solid #ddd; /* Garis bawah sel */
+			}
+
+			/* Alternatif warna baris (zebra striping) */
+			tr:nth-child(even) {
+				background-color: #f9f9f9; /* Warna latar baris genap */
+			}
+
+			/* Animasi pada hover */
+			tr:hover {
+				background-color: #f1f1f1; /* Warna latar saat hover */
+				transition: background-color 0.3s ease; /* Animasi perubahan warna */
+			}
+
+			@media screen and (max-width: 600px) {
+				table {
+					overflow-x: auto;
+					display: block;
+				}
+			}
+		</style>
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="<?= base_url() ?>assets/webprofile/css/fontawesome.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/webprofile/css/templatemo-digimedia-v3.css">
@@ -209,7 +249,7 @@ https://templatemo.com/tm-568-digimedia
           </div>
         </div>
         <div class="col-lg-12 wow fadeInUp" data-wow-duration="0.5s" data-wow-delay="0.25s">
-          <form id="contact" action="" method="post">
+          <form id="contact" action="<?= base_url('index.php/users/addpengaduan') ?>" method="post">
             <div class="row">
               <div class="col-lg-12">
                 <div class="fill-form">
@@ -220,27 +260,47 @@ https://templatemo.com/tm-568-digimedia
 							<div class="col-lg-6">
 								<b> Jenis Pengaduan </b>
 								<fieldset>
-								  <select name="jenis_pengaduan" class="form-control" id="jenis_pengaduan">
-									  <option value="">Silahkan pilih jenis pengaduan</option>
+								  <select name="jenis_pengaduan" class="form-control" id="jenis_pengaduan" required>
+									<option value="">Silahkan pilih jenis pengaduan</option>
+									<?php 
+									if ($jenispengaduan->num_rows() > 0) {
+											foreach ($jenispengaduan->result() as $data) { ?>
+													<option value="<?= htmlspecialchars($data->id_jenis_pengaduan) ?>"><?= htmlspecialchars($data->nama_jenis_pengaduan) ?></option>
+											<?php }
+									} else {
+											echo '<option value="">No data available</option>';
+									} ?>
 								  </select>
+									<small class="text-danger" style="color:red;font-size:13px;"><?= form_error('username'); ?></small>
 								</fieldset>
 								<br>
 								<b> Media Pengaduan </b>
 								<fieldset>
-								  <select name="media_pengaduan" class="form-control" id="media_pengaduan">
+								  <select name="media_pengaduan" class="form-control" id="media_pengaduan" required>
 									  <option value="">Silahkan pilih media pengaduan</option>
+										<?php 
+										if ($mediapelaporan->num_rows() > 0) {
+												foreach ($mediapelaporan->result() as $data) { ?>
+														<option value="<?= htmlspecialchars($data->id_media_pelaporan) ?>"><?= htmlspecialchars($data->nama_media_pelaporan) ?></option>
+												<?php }
+										} else {
+												echo '<option value="">No data available</option>';
+										} ?>
 								  </select>
+									<small class="text-danger" style="color:red;font-size:13px;"><?= form_error('username'); ?></small>
 								</fieldset>
 								<br>
 								<fieldset>
 								<b>Isi Pengaduan</b>
-								<input type="text" name="isi_pengaduan" id="isi_pengaduan" placeholder="Isi Pengaduan" autocomplete="on">
+								<input type="text" name="isi_pengaduan" id="isi_pengaduan" placeholder="Isi Pengaduan" autocomplete="on" required>
+								<small class="text-danger" style="color:red;font-size:13px;"><?= form_error('username'); ?></small>
 							</fieldset>
 							</div>
 							<div class="col-lg-6">
 								<b>Lokasi</b>
 								<input type="hidden" class="form-control" id="lat" name="lat">
                         		<input type="hidden" class="form-control" id="long" name="long">
+                        		<input type="hidden" class="form-control" id="id_user" name="id_user" value="<?= $this->fungsi->user_login()->id_user ?>">
 								<div id="peta" style="height:300px; width: 100%"></div>
 							</div>
 						</div>
@@ -257,6 +317,54 @@ https://templatemo.com/tm-568-digimedia
           </form>
         </div>
       </div>
+			<div class="row">
+        <div class="col-lg-6 offset-lg-3">
+          <div class="section-heading wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
+            <h4>Data Pengaduan</h4>
+          	<div class="line-dec"></div>
+          </div>
+        </div>
+			</div>
+			<table>
+					<thead>
+							<tr>
+									<th>#</th>
+									<th>Media Pengaduan</th>
+									<th>Jenis Pengaduan</th>
+									<th>Isi Pengaduan</th>
+									<th>Bidang</th>
+									<th>Tindak Lanjut</th>
+									<th>Tindak Lanjut By</th>
+									<th>Status Pengaduan</th>
+							</tr>
+					</thead>
+					<tbody>
+						<?php $no = 1;
+							foreach ($pengaduan->result() as $key => $data) {
+							$tindaklanjutby = $this->db->get_where('user', ['id_user' => $data->tindaklanjut_by])->row_array();
+							$bidang = $this->db->get_where('tbl_bidang', ['id_bidang' => $data->id_bidang])->row_array();
+						?>
+								<tr>
+										<td style="width: 5%;"><?= $no++ ?>.</td>
+										<td><?= $data->nama_media_pelaporan ?></td>
+										<td><?= $data->nama_jenis_pengaduan ?></td>
+										<td><?= $data->isi_pengaduan ?></td>
+										<td><?= $bidang['nama_bidang'] ?></td>
+										<td><?= $data->tindaklanjut ?></td>
+										<td><?= $tindaklanjutby['nama_pegawai'] ?></td>
+										<td>
+											<?php
+												echo ($data->tindaklanjut != '') ? '<p style="color:green;font-size:14px;"><b>Sudah ditindak lanjut</b></p>' : '<p style="color:red;font-size:14px;"><b>Sedang diproses</b></p>';
+											?>
+
+										</td>
+								</tr>
+						<?php
+						} ?>
+					</tbody>
+
+			</table>
+
     </div>
   </div>
 

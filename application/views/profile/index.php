@@ -53,7 +53,7 @@
 <script>
     $(document).ready(function() {
         $.ajax({
-            url: "<?= base_url() ?>profile/load_profile",
+            url: "<?= base_url() ?>index.php/profile/load_profile",
             type: "get",
             dataType: "html",
             success: function(data) {

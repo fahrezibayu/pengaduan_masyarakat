@@ -16,39 +16,6 @@
             <input type="text" name="nama_pegawai" class="form-control" id="nama_pegawai" placeholder="">
             <small class="text-danger nama_pegawai"></small>
         </div>
-        <div class="form-group">
-            <label for="divisi">Divisi<small class="text-danger">*</small></label>
-            <input type="text" name="divisi" readonly class="form-control" id="divisi" placeholder="">
-        </div>
-        <div class="form-group">
-            <label for="tgl_masuk">Tanggal Masuk<small class="text-danger">*</small></label>
-            <input type="text" name="tgl_masuk" readonly class="form-control" id="tgl_masuk" placeholder="">
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="tgl_lahir">Tanggal Lahir<small class="text-danger">*</small></label>
-                    <input type="date" name="tgl_lahir" class="form-control" id="tgl_lahir" placeholder="">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="tempat_lahir">Tempat Lahir<small class="text-danger">*</small></label>
-                    <input type="text" name="tempat_lahir" class="form-control" id="tempat_lahir" placeholder="">
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label>Jenis Kelamin <small class="text-danger">*</small></label>
-            <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="jenis_kelamin" value="L" name="jenis_kelamin" class="custom-control-input">
-                <label class="custom-control-label" for="jenis_kelamin"> Laki-laki</label>
-            </div>
-            <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="jenis_kelamin" value="P" name="jenis_kelamin" class="custom-control-input">
-                <label class="custom-control-label" for="jenis_kelamin"> Perempuan</label>
-            </div>
-        </div>
         <div class="form-group ">
             <label>Alamat <small class="text-danger">*</small></label>
             <textarea name="alamat" value="" class="form-control"></textarea>
@@ -56,11 +23,6 @@
         <div class="form-group">
             <label for="nohp">No HP<small class="text-danger">*</small></label>
             <input type="text" name="nohp" class="form-control" id="nohp" placeholder="">
-        </div>
-        <div class="form-group">
-            <label for="email">Email<small class="text-danger">*</small></label>
-            <input type="text" name="email" class="form-control" id="email" placeholder="">
-            <small class="text-danger email"></small>
         </div>
         <button type="submit" class="btn btn-block btn-primary edit-data-diri">Edit Data Diri</button>
     </form>
@@ -71,7 +33,7 @@
         $(".card").css("width", "350px");
         $(".card").css("height", "400px");
         $.ajax({
-            url: "<?= base_url() ?>profile/load_profile",
+            url: "<?= base_url() ?>index.php/profile/load_profile",
             type: "get",
             dataType: "html",
             success: function(data) {
@@ -81,19 +43,13 @@
     });
 
     $.ajax({
-        url: "<?= base_url(); ?>profile/get_data_user",
+        url: "<?= base_url(); ?>index.php/profile/get_data_user",
         type: "get",
         dataType: "json",
         success: function(data) {
             $("[name='nama_pegawai']").val(data.data_user.nama_pegawai);
-            $("[name='divisi']").val(data.data_user.ket_divisi);
-            $("[name='tgl_masuk']").val(data.data_karyawan.tgl_masuk);
-            $("[name='tgl_lahir']").val(data.data_karyawan.tgl_lahir);
-            $("[name='tempat_lahir']").val(data.data_karyawan.tempat_lahir);
-            $('input:radio[name=jenis_kelamin][value=' + data.data_karyawan.jenis_kelamin + ']')[0].checked = true;
-            $("[name='alamat']").val(data.data_karyawan.alamat);
-            $("[name='nohp']").val(data.data_karyawan.nohp);
-            $("[name='email']").val(data.data_karyawan.email);
+            $("[name='alamat']").val(data.data_user.alamat);
+            $("[name='nohp']").val(data.data_user.nohp);
         }
     });
 
@@ -108,7 +64,7 @@
         let email = $("[name='email']").val();
 
         $.ajax({
-            url: "<?= base_url(); ?>profile/proses_edit_data_diri",
+            url: "<?= base_url(); ?>index.php/profile/proses_edit_data_diri",
             type: "post",
             data: {
                 nama_pegawai: nama_pegawai,
@@ -149,7 +105,7 @@
                         });
 
                         setTimeout(() => {
-                            window.location = "<?= base_url('profile'); ?>"
+                            window.location = "<?= base_url('index.php/profile'); ?>"
                         }, 2000);
                     } else {
                         iziToast.error({
